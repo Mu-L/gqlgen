@@ -7,11 +7,12 @@
 package generated
 
 import (
+	reflect "reflect"
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	reflect "reflect"
-	sync "sync"
 )
 
 const (
@@ -2751,7 +2752,7 @@ func file_apollo_trace_proto_rawDescGZIP() []byte {
 
 var file_apollo_trace_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_apollo_trace_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
-var file_apollo_trace_proto_goTypes = []interface{}{
+var file_apollo_trace_proto_goTypes = []any{
 	(Trace_CachePolicy_Scope)(0),                    // 0: Trace.CachePolicy.Scope
 	(Trace_HTTP_Method)(0),                          // 1: Trace.HTTP.Method
 	(*Trace)(nil),                                   // 2: Trace
@@ -2857,7 +2858,7 @@ func file_apollo_trace_proto_init() {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_apollo_trace_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[0].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace); i {
 			case 0:
 				return &v.state
@@ -2869,7 +2870,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[1].Exporter = func(v any, i int) any {
 			switch v := v.(*ReportHeader); i {
 			case 0:
 				return &v.state
@@ -2881,7 +2882,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[2].Exporter = func(v any, i int) any {
 			switch v := v.(*PathErrorStats); i {
 			case 0:
 				return &v.state
@@ -2893,7 +2894,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[3].Exporter = func(v any, i int) any {
 			switch v := v.(*QueryLatencyStats); i {
 			case 0:
 				return &v.state
@@ -2905,7 +2906,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[4].Exporter = func(v any, i int) any {
 			switch v := v.(*StatsContext); i {
 			case 0:
 				return &v.state
@@ -2917,7 +2918,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[5].Exporter = func(v any, i int) any {
 			switch v := v.(*ContextualizedQueryLatencyStats); i {
 			case 0:
 				return &v.state
@@ -2929,7 +2930,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[6].Exporter = func(v any, i int) any {
 			switch v := v.(*ContextualizedTypeStats); i {
 			case 0:
 				return &v.state
@@ -2941,7 +2942,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[7].Exporter = func(v any, i int) any {
 			switch v := v.(*FieldStat); i {
 			case 0:
 				return &v.state
@@ -2953,7 +2954,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[8].Exporter = func(v any, i int) any {
 			switch v := v.(*TypeStat); i {
 			case 0:
 				return &v.state
@@ -2965,7 +2966,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[9].Exporter = func(v any, i int) any {
 			switch v := v.(*ReferencedFieldsForType); i {
 			case 0:
 				return &v.state
@@ -2977,7 +2978,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[10].Exporter = func(v any, i int) any {
 			switch v := v.(*Report); i {
 			case 0:
 				return &v.state
@@ -2989,7 +2990,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[11].Exporter = func(v any, i int) any {
 			switch v := v.(*ContextualizedStats); i {
 			case 0:
 				return &v.state
@@ -3001,7 +3002,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[12].Exporter = func(v any, i int) any {
 			switch v := v.(*TracesAndStats); i {
 			case 0:
 				return &v.state
@@ -3013,7 +3014,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[13].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_CachePolicy); i {
 			case 0:
 				return &v.state
@@ -3025,7 +3026,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[14].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_Details); i {
 			case 0:
 				return &v.state
@@ -3037,7 +3038,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[15].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_Error); i {
 			case 0:
 				return &v.state
@@ -3049,7 +3050,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[16].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_HTTP); i {
 			case 0:
 				return &v.state
@@ -3061,7 +3062,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[17].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_Location); i {
 			case 0:
 				return &v.state
@@ -3073,7 +3074,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[18].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_Node); i {
 			case 0:
 				return &v.state
@@ -3085,7 +3086,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[19].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_QueryPlanNode); i {
 			case 0:
 				return &v.state
@@ -3097,7 +3098,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[21].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_HTTP_Values); i {
 			case 0:
 				return &v.state
@@ -3109,7 +3110,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[24].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_QueryPlanNode_SequenceNode); i {
 			case 0:
 				return &v.state
@@ -3121,7 +3122,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[25].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_QueryPlanNode_ParallelNode); i {
 			case 0:
 				return &v.state
@@ -3133,7 +3134,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[26].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_QueryPlanNode_FetchNode); i {
 			case 0:
 				return &v.state
@@ -3145,7 +3146,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[27].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_QueryPlanNode_FlattenNode); i {
 			case 0:
 				return &v.state
@@ -3157,7 +3158,7 @@ func file_apollo_trace_proto_init() {
 				return nil
 			}
 		}
-		file_apollo_trace_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+		file_apollo_trace_proto_msgTypes[28].Exporter = func(v any, i int) any {
 			switch v := v.(*Trace_QueryPlanNode_ResponsePathElement); i {
 			case 0:
 				return &v.state
@@ -3170,17 +3171,17 @@ func file_apollo_trace_proto_init() {
 			}
 		}
 	}
-	file_apollo_trace_proto_msgTypes[18].OneofWrappers = []interface{}{
+	file_apollo_trace_proto_msgTypes[18].OneofWrappers = []any{
 		(*Trace_Node_ResponseName)(nil),
 		(*Trace_Node_Index)(nil),
 	}
-	file_apollo_trace_proto_msgTypes[19].OneofWrappers = []interface{}{
+	file_apollo_trace_proto_msgTypes[19].OneofWrappers = []any{
 		(*Trace_QueryPlanNode_Sequence)(nil),
 		(*Trace_QueryPlanNode_Parallel)(nil),
 		(*Trace_QueryPlanNode_Fetch)(nil),
 		(*Trace_QueryPlanNode_Flatten)(nil),
 	}
-	file_apollo_trace_proto_msgTypes[28].OneofWrappers = []interface{}{
+	file_apollo_trace_proto_msgTypes[28].OneofWrappers = []any{
 		(*Trace_QueryPlanNode_ResponsePathElement_FieldName)(nil),
 		(*Trace_QueryPlanNode_ResponsePathElement_Index)(nil),
 	}
