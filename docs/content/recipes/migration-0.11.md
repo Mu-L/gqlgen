@@ -28,6 +28,8 @@ response. Supported transports are:
  - GET
  - JSON POST
  - Multipart form
+ - UrlEncoded form
+ - GRAPHQL
  - Websockets
 
 new usage looks like this
@@ -41,6 +43,8 @@ srv.AddTransport(transport.Options{})
 srv.AddTransport(transport.GET{})
 srv.AddTransport(transport.POST{})
 srv.AddTransport(transport.MultipartForm{})
+srv.AddTransport(transport.UrlEncodedForm{})
+srv.AddTransport(transport.GRAPHQL{})
 ```
 
 ### New handler extension API
@@ -100,13 +104,6 @@ srv.Use(extension.AutomaticPersistedQuery{
 srv.Use(apollotracing.Tracer{})
 ```
 
-### Default server
-
-We provide a set of default extensions and transports if you aren't ready to customize them yet. Simply:
-```go
-handler.NewDefaultServer(es)
-```
-
 ### More consistent naming
 
 As part of cleaning up the names the RequestContext has been renamed to OperationContext, as there can be multiple created during the lifecycle of a request. A new ResponseContext has also been created and error handling has been moved here. This allows each response in a subscription to have its own errors. I'm not sure what bugs this might have been causing before...
@@ -117,7 +114,7 @@ Many of the old interfaces collapse down into just a few extension points:
 
 ![Anatomy of a request](/request_anatomy.png)
 
-The tracing interface has also been removed, tracing stats are now measured in core (eg time to parse query) and made available on the operation/response contexts. Much of the old interface was designed so that users of a tracer dont need to know which extension points it was listening to, the new handler extensions have the same goal.
+The tracing interface has also been removed, tracing stats are now measured in core (eg time to parse query) and made available on the operation/response contexts. Much of the old interface was designed so that users of a tracer don't need to know which extension points it was listening to, the new handler extensions have the same goal.
 
 ### Backward compatibility
 

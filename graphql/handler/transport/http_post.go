@@ -1,15 +1,25 @@
 package transport
 
 import (
+	"bytes"
+	"fmt"
+	"io"
 	"mime"
 	"net/http"
+	"sync"
+
+	"github.com/vektah/gqlparser/v2/gqlerror"
 
 	"github.com/99designs/gqlgen/graphql"
 )
 
 // POST implements the POST side of the default HTTP transport
 // defined in https://github.com/APIs-guru/graphql-over-http#post
-type POST struct{}
+type POST struct {
+	// Map of all headers that are added to graphql response. If not
+	// set, only one header: Content-Type: application/json will be set.
+	ResponseHeaders map[string][]string
+}
 
 var _ graphql.Transport = POST{}
 
@@ -26,31 +36,75 @@ func (h POST) Supports(r *http.Request) bool {
 	return r.Method == "POST" && mediaType == "application/json"
 }
 
-func (h POST) Do(w http.ResponseWriter, r *http.Request, exec graphql.GraphExecutor) {
-	w.Header().Set("Content-Type", "application/json")
-
-	var params *graphql.RawParams
-	start := graphql.Now()
-	if err := jsonDecode(r.Body, &params); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		writeJsonErrorf(w, "json body could not be decoded: "+err.Error())
-		return
+func getRequestBody(r *http.Request) (string, error) {
+	if r == nil || r.Body == nil {
+		return "", nil
 	}
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		return "", fmt.Errorf("unable to get Request Body %w", err)
+	}
+	return string(body), nil
+}
 
+var pool = sync.Pool{
+	New: func() any {
+		return &graphql.RawParams{}
+	},
+}
+
+func (h POST) Do(w http.ResponseWriter, r *http.Request, exec graphql.GraphExecutor) {
+	ctx := r.Context()
+	writeHeaders(w, h.ResponseHeaders)
+	params := pool.Get().(*graphql.RawParams)
+	defer func() {
+		params.Headers = nil
+		params.ReadTime = graphql.TraceTiming{}
+		params.Extensions = nil
+		params.OperationName = ""
+		params.Query = ""
+		params.Variables = nil
+
+		pool.Put(params)
+	}()
 	params.Headers = r.Header
 
+	start := graphql.Now()
 	params.ReadTime = graphql.TraceTiming{
 		Start: start,
 		End:   graphql.Now(),
 	}
 
-	rc, err := exec.CreateOperationContext(r.Context(), params)
+	bodyBytes, err := io.ReadAll(r.Body)
 	if err != nil {
-		w.WriteHeader(statusFor(err))
-		resp := exec.DispatchError(graphql.WithOperationContext(r.Context(), rc), err)
+		gqlErr := gqlerror.Errorf("could not read request body: %+v", err)
+		resp := exec.DispatchError(ctx, gqlerror.List{gqlErr})
 		writeJson(w, resp)
 		return
 	}
-	responses, ctx := exec.DispatchOperation(r.Context(), rc)
+
+	bodyReader := bytes.NewReader(bodyBytes)
+	if err := jsonDecode(bodyReader, &params); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		gqlErr := gqlerror.Errorf(
+			"json request body could not be decoded: %+v body:%s",
+			err,
+			string(bodyBytes),
+		)
+		resp := exec.DispatchError(ctx, gqlerror.List{gqlErr})
+		writeJson(w, resp)
+		return
+	}
+
+	rc, opErr := exec.CreateOperationContext(ctx, params)
+	if opErr != nil {
+		w.WriteHeader(statusFor(opErr))
+		resp := exec.DispatchError(graphql.WithOperationContext(ctx, rc), opErr)
+		writeJson(w, resp)
+		return
+	}
+
+	var responses graphql.ResponseHandler
+	responses, ctx = exec.DispatchOperation(ctx, rc)
 	writeJson(w, responses(ctx))
 }
